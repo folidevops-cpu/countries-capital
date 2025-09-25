@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Country and Capital</title>
+    <script>
+        async function showCapital() {
+            const country = document.getElementById("country").value;
+            const response = await fetch("/capital?country=" + country);
+            const capital = await response.text();
+            document.getElementById("capital").innerText = "Capital: " + capital;
+        }
+    </script>
+</head>
+<body>
+    <h2>Select a Country</h2>
+    <select id="country" onchange="showCapital()">
+        <option value="">--Choose--</option>
+        <th:block th:each="c : ${countries}">
+            <option th:value="${c}" th:text="${c}"></option>
+        </th:block>
+    </select>
+    <p id="capital"></p>
+</body>
+</html>
