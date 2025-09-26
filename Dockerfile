@@ -1,5 +1,5 @@
-# Use OpenJDK 17 as the base image
-FROM openjdk:17-jre-slim
+# Use Amazon Corretto 8 as the base image
+FROM amazoncorretto:8-alpine3.19-jre
 
 # Set the working directory inside the container
 WORKDIR /app
