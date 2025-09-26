@@ -5,7 +5,7 @@ FROM openjdk:17-jre-slim
 WORKDIR /app
 
 # Copy the JAR file from the target directory to the container
-COPY target/country-capital-1.0.0.jar app.jar
+COPY target/*.jar app.jar
 
 # Expose the port that Spring Boot uses (default is 8080)
 EXPOSE 8080
