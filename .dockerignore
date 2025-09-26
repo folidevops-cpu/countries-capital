@@ -1,0 +1,35 @@
+# Exclude source code and build files that aren't needed in the Docker image
+src/
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml
+
+# Exclude Git files
+.git/
+.gitignore
+
+# Exclude IDE files
+.idea/
+.vscode/
+*.iml
+
+# Exclude OS files
+.DS_Store
+Thumbs.db
+
+# Exclude temporary files
+*.log
+*.tmp
+*.temp
+
+# Exclude test reports and other build artifacts except the JAR
+target/classes/
+target/test-classes/
+target/surefire-reports/
+target/maven-archiver/
+target/maven-status/
+target/generated-sources/
+
+# Keep only the JAR file from target
+!target/*.jar
