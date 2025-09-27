@@ -34,6 +34,12 @@ public class CountryController {
         model.addAttribute("countries", countries.keySet());
         return "index";
     }
+    
+    @GetMapping("/countries")
+    public String countries(Model model) {
+        model.addAttribute("countries", countries.keySet());
+        return "countries";
+    }
 
     @ResponseBody
     @GetMapping("/capital")

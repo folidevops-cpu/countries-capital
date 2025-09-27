@@ -31,5 +31,5 @@ target/maven-archiver/
 target/maven-status/
 target/generated-sources/
 
-# Keep only the JAR file from target
-!target/*.jar
+# Keep only the specific JAR file from target
+!target/country-capital-1.0.0.jar

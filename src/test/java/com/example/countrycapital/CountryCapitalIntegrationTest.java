@@ -25,8 +25,8 @@ class CountryCapitalIntegrationTest {
                 "http://localhost:" + port + "/", String.class);
         
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).contains("Country and Capital");
-        assertThat(response.getBody()).contains("Select a Country");
+        assertThat(response.getBody()).contains("Country Capital & Task Manager");
+        assertThat(response.getBody()).contains("Welcome to Country Capital & Task Manager");
     }
 
     @Test
