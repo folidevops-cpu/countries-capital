@@ -1,5 +1,5 @@
 # Use Amazon Corretto 17 as the base image (matching your Spring Boot 3.2.0 requirement)
-FROM amazoncorretto:17-alpine3.19-jre
+FROM amazoncorretto:8-alpine3.19-jre
 
 # Set metadata
 LABEL maintainer="folidevops"
