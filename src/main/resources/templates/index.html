@@ -4,34 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Country Capital & Task Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
         
-        .navbar {
+        .navbar-glass {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .navbar-brand {
-            font-weight: 700;
-            color: var(--primary-color) !important;
-        }
-        
-        .main-container {
-            margin-top: 2rem;
         }
         
         .hero-section {
@@ -60,7 +45,7 @@
         }
         
         .btn-modern {
-            background: var(--primary-color);
+            background: #6366f1;
             border: none;
             border-radius: 10px;
             padding: 0.75rem 2rem;
@@ -69,79 +54,84 @@
         }
         
         .btn-modern:hover {
-            background: var(--secondary-color);
+            background: #8b5cf6;
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
         }
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-globe2"></i> Country Capital & Tasks
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/countries"><i class="bi bi-globe"></i> Countries</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/tasks"><i class="bi bi-check2-square"></i> Tasks</a>
-                    </li>
-                </ul>
+    <nav class="navbar-glass fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a class="font-bold text-primary text-xl" href="/">
+                    <i class="bi bi-globe2"></i> Country Capital & Tasks
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a class="text-gray-700 hover:text-primary transition-colors" href="/">
+                        <i class="bi bi-house"></i> Home
+                    </a>
+                    <a class="text-gray-700 hover:text-primary transition-colors" href="/countries">
+                        <i class="bi bi-globe"></i> Countries
+                    </a>
+                    <a class="text-gray-700 hover:text-primary transition-colors" href="/tasks">
+                        <i class="bi bi-check2-square"></i> Tasks
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container main-container">
+    <div class="max-w-7xl mx-auto px-4 pt-24">
         <div class="hero-section">
-            <h1 class="text-primary mb-4">Welcome to Country Capital & Task Manager</h1>
-            <p class="lead text-muted mb-4">Explore world capitals and manage your tasks efficiently</p>
-            <div class="d-flex gap-3 justify-content-center flex-wrap">
-                <a href="/countries" class="btn btn-modern btn-lg">
-                    <i class="bi bi-globe"></i> Explore Countries
+            <h1 class="text-primary text-4xl font-bold mb-4">Welcome to Country Capital & Task Manager</h1>
+            <p class="text-gray-600 text-xl mb-6">Explore world capitals and manage your tasks efficiently</p>
+            <div class="flex gap-4 justify-center flex-wrap">
+                <a href="/countries" class="btn-modern text-white text-lg inline-flex items-center space-x-2 no-underline">
+                    <i class="bi bi-globe"></i> <span>Explore Countries</span>
                 </a>
-                <a href="/tasks" class="btn btn-outline-primary btn-lg">
-                    <i class="bi bi-check2-square"></i> Manage Tasks
+                <a href="/tasks" class="border-2 border-primary text-primary px-8 py-3 rounded-lg text-lg font-semibold hover:bg-primary hover:text-white transition-colors inline-flex items-center space-x-2 no-underline">
+                    <i class="bi bi-check2-square"></i> <span>Manage Tasks</span>
                 </a>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="feature-card text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-globe2 text-primary" style="font-size: 3rem;"></i>
-                    </div>
-                    <h3 class="mb-3">Country Explorer</h3>
-                    <p class="text-muted mb-4">
-                        Discover capitals of countries around the world. Test your geography knowledge.
-                    </p>
-                    <a href="/countries" class="btn btn-modern">Start Exploring</a>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div class="feature-card text-center">
+                <div class="mb-4">
+                    <i class="bi bi-globe2 text-primary text-5xl"></i>
                 </div>
+                <h3 class="text-2xl font-bold mb-4">Country Explorer</h3>
+                <p class="text-gray-600 mb-6">
+                    Discover capitals of countries around the world. Test your geography knowledge.
+                </p>
+                <a href="/countries" class="btn-modern text-white inline-block no-underline">Start Exploring</a>
             </div>
-            <div class="col-lg-6">
-                <div class="feature-card text-center">
-                    <div class="mb-3">
-                        <i class="bi bi-kanban text-primary" style="font-size: 3rem;"></i>
-                    </div>
-                    <h3 class="mb-3">Task Manager</h3>
-                    <p class="text-muted mb-4">
-                        Organize your work with our task management system. Track progress and deadlines.
-                    </p>
-                    <a href="/tasks" class="btn btn-modern">Manage Tasks</a>
+            <div class="feature-card text-center">
+                <div class="mb-4">
+                    <i class="bi bi-kanban text-primary text-5xl"></i>
                 </div>
+                <h3 class="text-2xl font-bold mb-4">Task Manager</h3>
+                <p class="text-gray-600 mb-6">
+                    Organize your work with our task management system. Track progress and deadlines.
+                </p>
+                <a href="/tasks" class="btn-modern text-white inline-block no-underline">Manage Tasks</a>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 </html>

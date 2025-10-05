@@ -4,27 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #6366f1;
-            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: var(--bg-gradient);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
         }
         
-        .navbar {
+        .navbar-glass {
             background: rgba(255, 255, 255, 0.95) !important;
             backdrop-filter: blur(10px);
-        }
-        
-        .main-container {
-            margin-top: 2rem;
         }
         
         .task-card {
@@ -58,51 +49,55 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="bi bi-globe2"></i> Country Capital & Tasks
-            </a>
-            <div class="collapse navbar-collapse">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/"><i class="bi bi-house"></i> Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/countries"><i class="bi bi-globe"></i> Countries</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/tasks"><i class="bi bi-check2-square"></i> Tasks</a>
-                    </li>
-                </ul>
+    <nav class="navbar-glass fixed top-0 w-full z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a class="font-bold text-primary text-xl" href="/">
+                    <i class="bi bi-globe2"></i> Country Capital & Tasks
+                </a>
+                <div class="hidden md:flex space-x-8">
+                    <a class="text-gray-700 hover:text-primary transition-colors" href="/">
+                        <i class="bi bi-house"></i> Home
+                    </a>
+                    <a class="text-gray-700 hover:text-primary transition-colors" href="/countries">
+                        <i class="bi bi-globe"></i> Countries
+                    </a>
+                    <a class="text-primary font-semibold" href="/tasks">
+                        <i class="bi bi-check2-square"></i> Tasks
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <div class="container main-container">
+    <div class="max-w-7xl mx-auto px-4 pt-24">
         <!-- Success/Error Messages -->
-        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show">
+        <div th:if="${successMessage}" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4 relative">
             <i class="bi bi-check-circle"></i> <span th:text="${successMessage}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none'">
+                <i class="bi bi-x"></i>
+            </span>
         </div>
         
-        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show">
+        <div th:if="${errorMessage}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 relative">
             <i class="bi bi-exclamation-triangle"></i> <span th:text="${errorMessage}"></span>
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none'">
+                <i class="bi bi-x"></i>
+            </span>
         </div>
 
         <!-- Header -->
         <div class="task-card">
-            <div class="card-body">
-                <div class="d-flex justify-content-between align-items-center">
+            <div class="p-6">
+                <div class="flex justify-between items-center">
                     <div>
-                        <h1 class="text-primary mb-1">
+                        <h1 class="text-primary text-3xl font-bold mb-1">
                             <i class="bi bi-kanban"></i> Task Manager
                         </h1>
-                        <p class="text-muted mb-0">Organize and track your tasks efficiently</p>
+                        <p class="text-gray-600 mb-0">Organize and track your tasks efficiently</p>
                     </div>
-                    <a href="/tasks/new" class="btn btn-primary btn-lg">
-                        <i class="bi bi-plus-circle"></i> New Task
+                    <a href="/tasks/new" class="bg-primary text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-600 transition-colors inline-flex items-center space-x-2 no-underline">
+                        <i class="bi bi-plus-circle"></i> <span>New Task</span>
                     </a>
                 </div>
             </div>
@@ -110,34 +105,26 @@
 
         <!-- Task Summary -->
         <div class="task-card" th:if="${summary}">
-            <div class="card-body">
-                <h5 class="card-title mb-3">
+            <div class="p-6">
+                <h5 class="text-xl font-semibold mb-6">
                     <i class="bi bi-bar-chart"></i> Task Summary
                 </h5>
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        <div class="p-3">
-                            <h3 class="text-primary" th:text="${summary.total}">0</h3>
-                            <small class="text-muted">Total Tasks</small>
-                        </div>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                    <div class="p-4">
+                        <h3 class="text-primary text-2xl font-bold" th:text="${summary.total}">0</h3>
+                        <small class="text-gray-600">Total Tasks</small>
                     </div>
-                    <div class="col-md-3">
-                        <div class="p-3">
-                            <h3 class="text-info" th:text="${summary.inProgress}">0</h3>
-                            <small class="text-muted">In Progress</small>
-                        </div>
+                    <div class="p-4">
+                        <h3 class="text-blue-500 text-2xl font-bold" th:text="${summary.inProgress}">0</h3>
+                        <small class="text-gray-600">In Progress</small>
                     </div>
-                    <div class="col-md-3">
-                        <div class="p-3">
-                            <h3 class="text-success" th:text="${summary.delivered}">0</h3>
-                            <small class="text-muted">Delivered</small>
-                        </div>
+                    <div class="p-4">
+                        <h3 class="text-green-500 text-2xl font-bold" th:text="${summary.delivered}">0</h3>
+                        <small class="text-gray-600">Delivered</small>
                     </div>
-                    <div class="col-md-3">
-                        <div class="p-3">
-                            <h3 class="text-danger" th:text="${summary.overdue}">0</h3>
-                            <small class="text-muted">Overdue</small>
-                        </div>
+                    <div class="p-4">
+                        <h3 class="text-red-500 text-2xl font-bold" th:text="${summary.overdue}">0</h3>
+                        <small class="text-gray-600">Overdue</small>
                     </div>
                 </div>
             </div>
@@ -145,70 +132,73 @@
 
         <!-- Tasks List -->
         <div class="task-card">
-            <div class="card-body">
-                <h5 class="card-title mb-4">
+            <div class="p-6">
+                <h5 class="text-xl font-semibold mb-6">
                     <i class="bi bi-list-task"></i> All Tasks
                 </h5>
                 
-                <div th:if="${#lists.isEmpty(tasks)}" class="text-center py-5">
-                    <i class="bi bi-inbox text-muted" style="font-size: 4rem;"></i>
-                    <h4 class="text-muted mt-3">No tasks yet</h4>
-                    <p class="text-muted">Create your first task to get started!</p>
-                    <a href="/tasks/new" class="btn btn-primary">
-                        <i class="bi bi-plus-circle"></i> Create Task
+                <div th:if="${#lists.isEmpty(tasks)}" class="text-center py-12">
+                    <i class="bi bi-inbox text-gray-400 text-6xl mb-4"></i>
+                    <h4 class="text-gray-600 text-xl mb-2">No tasks yet</h4>
+                    <p class="text-gray-500 mb-6">Create your first task to get started!</p>
+                    <a href="/tasks/new" class="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-600 transition-colors inline-flex items-center space-x-2 no-underline">
+                        <i class="bi bi-plus-circle"></i> <span>Create Task</span>
                     </a>
                 </div>
 
                 <div th:unless="${#lists.isEmpty(tasks)}">
                     <div th:each="task : ${tasks}" 
-                         class="task-item p-3"
+                         class="task-item p-4"
                          th:classappend="${task.overdue} ? 'task-overdue' : ''">
-                        <div class="d-flex justify-content-between align-items-start">
-                            <div class="flex-grow-1">
-                                <div class="d-flex align-items-center mb-2">
-                                    <h5 class="mb-0 me-3" th:text="${task.title}">Task Title</h5>
-                                    <span class="badge me-2"
+                        <div class="flex justify-between items-start">
+                            <div class="flex-grow">
+                                <div class="flex items-center mb-3 flex-wrap gap-2">
+                                    <h5 class="text-lg font-semibold mb-0 mr-4" th:text="${task.title}">Task Title</h5>
+                                    <span class="px-3 py-1 rounded-full text-sm font-medium text-white"
                                           th:classappend="'badge-' + ${task.status.name().toLowerCase().replace('_', '-')}"
                                           th:text="${task.status.displayName}">Status</span>
-                                    <span th:if="${task.overdue}" class="badge bg-danger">
+                                    <span th:if="${task.overdue}" class="px-3 py-1 rounded-full text-sm font-medium bg-red-500 text-white">
                                         <i class="bi bi-exclamation-triangle"></i> Overdue
                                     </span>
                                 </div>
-                                <p class="text-muted mb-2" th:text="${task.description}" th:if="${task.description}">Description</p>
-                                <div class="d-flex align-items-center text-muted">
-                                    <i class="bi bi-calendar-event me-1"></i>
-                                    <small>Due: <span th:text="${#temporals.format(task.deliveryDate, 'MMM dd, yyyy')}">Date</span></small>
-                                    <span class="mx-2">•</span>
-                                    <i class="bi bi-clock me-1"></i>
-                                    <small>Created: <span th:text="${#temporals.format(task.createdDate, 'MMM dd, yyyy')}">Date</span></small>
+                                <p class="text-gray-600 mb-3" th:text="${task.description}" th:if="${task.description}">Description</p>
+                                <div class="flex items-center text-gray-500 text-sm flex-wrap gap-4">
+                                    <div class="flex items-center">
+                                        <i class="bi bi-calendar-event mr-1"></i>
+                                        <span>Due: <span th:text="${#temporals.format(task.deliveryDate, 'MMM dd, yyyy')}">Date</span></span>
+                                    </div>
+                                    <div class="flex items-center">
+                                        <i class="bi bi-clock mr-1"></i>
+                                        <span>Created: <span th:text="${#temporals.format(task.createdDate, 'MMM dd, yyyy')}">Date</span></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="d-flex gap-2">
-                                <div class="dropdown">
-                                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" 
-                                            data-bs-toggle="dropdown">
+                            <div class="flex gap-2 ml-4">
+                                <div class="relative">
+                                    <button class="border border-gray-300 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-50 transition-colors dropdown-toggle" 
+                                            data-dropdown-target="dropdown-menu" onclick="toggleDropdown(this)">
                                         Status
                                     </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#" 
-                                               th:onclick="'updateStatus(' + ${task.id} + ', \'IN_PROGRESS\')'">
-                                            <i class="bi bi-play-circle text-primary"></i> In Progress
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" 
-                                               th:onclick="'updateStatus(' + ${task.id} + ', \'DELIVERED\')'">
-                                            <i class="bi bi-check-circle text-success"></i> Delivered
-                                        </a></li>
-                                        <li><a class="dropdown-item" href="#" 
-                                               th:onclick="'updateStatus(' + ${task.id} + ', \'CANCELED\')'">
-                                            <i class="bi bi-x-circle text-secondary"></i> Canceled
-                                        </a></li>
-                                    </ul>
+                                    <div class="absolute right-0 mt-1 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-10 hidden dropdown-menu">
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" 
+                                           th:onclick="'updateStatus(' + ${task.id} + ', \'IN_PROGRESS\')'">
+                                            <i class="bi bi-play-circle text-blue-500 mr-2"></i> In Progress
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" 
+                                           th:onclick="'updateStatus(' + ${task.id} + ', \'DELIVERED\')'">
+                                            <i class="bi bi-check-circle text-green-500 mr-2"></i> Delivered
+                                        </a>
+                                        <a class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer" 
+                                           th:onclick="'updateStatus(' + ${task.id} + ', \'CANCELED\')'">
+                                            <i class="bi bi-x-circle text-gray-500 mr-2"></i> Canceled
+                                        </a>
+                                    </div>
                                 </div>
-                                <a th:href="@{/tasks/{id}/edit(id=${task.id})}" class="btn btn-outline-primary btn-sm">
+                                <a th:href="@{/tasks/{id}/edit(id=${task.id})}" class="border border-blue-500 text-blue-500 px-3 py-1 rounded text-sm hover:bg-blue-50 transition-colors">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm" 
+                                <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" class="inline">
+                                    <button type="submit" class="border border-red-500 text-red-500 px-3 py-1 rounded text-sm hover:bg-red-50 transition-colors" 
                                             onclick="return confirm('Are you sure you want to delete this task?')">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -221,8 +211,19 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        secondary: '#8b5cf6',
+                    }
+                }
+            }
+        }
+        
         function updateStatus(taskId, status) {
             fetch(`/tasks/${taskId}/status`, {
                 method: 'POST',
@@ -243,6 +244,27 @@
                 alert('Failed to update task status');
             });
         }
+        
+        function toggleDropdown(button) {
+            const dropdown = button.nextElementSibling;
+            dropdown.classList.toggle('hidden');
+            
+            // Close other dropdowns
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu !== dropdown) {
+                    menu.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.matches('.dropdown-toggle')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            }
+        });
     </script>
 </body>
 </html>

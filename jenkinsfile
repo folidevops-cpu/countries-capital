@@ -1,0 +1,26 @@
+pipelines {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Build the application
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    // Run tests
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Deploy the application
+                }
+            }
+        }
+    }
+}
