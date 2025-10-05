@@ -1,6 +1,5 @@
 # Single-stage build for Spring Boot application
-FROM amazoncorretto:8-alpine3.19-jre
-
+FROM eclipse-temurin:17-jdk-slim
 # Set working directory
 WORKDIR /app
 
