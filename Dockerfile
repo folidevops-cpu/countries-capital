@@ -1,6 +1,5 @@
-# Use Amazon Corretto 17 as the base image (matching your Spring Boot 3.2.0 requirement)
-FROM amazoncorretto:8-alpine3.19-jre
-
+# Use OpenJDK 17 as the base image (matching your Spring Boot 3.2.0 requirement)
+FROM openjdk:17-jdk-slim
 # Set metadata
 LABEL maintainer="folidevops"
 LABEL description="Country Capital & Task Manager Spring Boot Application"
