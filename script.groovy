@@ -3,7 +3,7 @@ def buildApp() {
     // Add build and test commands here
 }
 
-def testApp() {} {
+def testApp()  {
     echo "Running tests..."
     // Add test commands here
 }
