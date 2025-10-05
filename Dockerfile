@@ -6,8 +6,9 @@ LABEL description="Country Capital & Task Manager Spring Boot Application"
 LABEL version="1.0.0"
 
 # Create a non-root user for security
-RUN addgroup -g 1001 -S appgroup && \
-    adduser -u 1001 -S appuser -G appgroup
+
+#RUN addgroup -g 1001 -S appgroup && \
+    #adduser -u 1001 -S appuser -G appgroup
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -17,10 +18,12 @@ WORKDIR /app
 COPY target/*.jar app.jar
 
 # Change ownership of the app directory to the non-root user
-RUN chown -R appuser:appgroup /app
+
+#RUN chown -R appuser:appgroup /app
 
 # Switch to non-root user
-USER appuser
+
+#USER appuser
 
 # Expose the port that Spring Boot uses (default is 8080)
 EXPOSE 8080
