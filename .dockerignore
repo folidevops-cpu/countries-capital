@@ -1,6 +1,6 @@
-# Exclude source code (we expect pre-built JAR)
-src/
-pom.xml
+# Build dependencies (keep for compilation)
+# src/
+# pom.xml
 .mvn/
 mvnw
 mvnw.cmd
