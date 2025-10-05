@@ -1,5 +1,5 @@
 # Single-stage build for Spring Boot application
-FROM eclipse-temurin:17-jdk-slim
+FROM eclipse-temurin:17-jdk
 # Set working directory
 WORKDIR /app
 
