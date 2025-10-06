@@ -1,35 +1,51 @@
-# Exclude source code and build files that aren't needed in the Docker image
-src/
+# Build dependencies (keep for compilation)
+# src/
+# pom.xml
 .mvn/
 mvnw
 mvnw.cmd
-pom.xml
 
-# Exclude Git files
-.git/
-.gitignore
-
-# Exclude IDE files
-.idea/
-.vscode/
-*.iml
-
-# Exclude OS files
-.DS_Store
-Thumbs.db
-
-# Exclude temporary files
-*.log
-*.tmp
-*.temp
-
-# Exclude test reports and other build artifacts except the JAR
+# Exclude build artifacts except the JAR we need
 target/classes/
 target/test-classes/
 target/surefire-reports/
 target/maven-archiver/
 target/maven-status/
 target/generated-sources/
+target/generated-test-sources/
 
-# Keep only the specific JAR file from target
+# Keep only the specific JAR file
 !target/country-capital-1.0.0.jar
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Version control
+.git/
+.gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+
+# Test results
+.pytest_cache/
+test-results/
+
+# Docker files themselves
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+README.md
+docs/
