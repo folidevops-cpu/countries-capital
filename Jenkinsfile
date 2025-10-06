@@ -1,43 +1,37 @@
-def gv
-
 pipeline {
     agent any
-    parameters {
-        choice(name: 'VERSION', choices: ['1.0.0', '1.0.1', '1.0.2'], description: 'Select the branch to build')
-        booleanParam(name: 'executeTests', defaultValue: true, description: 'Execute tests')
+    tools {
+        maven 'maven-3.9.11'
+    
     }
     stages {
 
-        stage('init'){
-            steps {
-                script {
-                    gv = load 'script.groovy'
-                }
-            }
-        }
-
-
-        stage('Build') {
+        stage('build jar') {
             steps {
               script {
-                  gv.buildApp()
+                    echo "Building jar file..."
+                    sh 'mvn  package'
+                    
               }
             }
         }
-        stage('Test') {
-            when {
-                expression { return params.executeTests }
-            }
+        stage('build docker image') {
+            
             steps {
                script {
-                   gv.testApp()
+                   echo "Building docker image..."
+                   withCredentials([usernamePassword(credentialsId: 'dockerhub-password', usernameVariable: 'DOCKERHUB_USERNAME', passwordVariable: 'DOCKERHUB_PASSWORD')]) {
+                       sh 'docker build -t folidevops/java-app:1.1 .'
+                       sh ' echo $DOCKERHUB_PASSWORD | docker login -u "$DOCKERHUB_USERNAME" --password-stdin'
+                       sh 'docker push folidevops/java-app:1.1'
+                   }
                }
             }
         }
         stage('Deploy') {
             steps {
                script {
-                   gv.deployApp()
+                     echo "Deploying the application..."
                }
             }
         }
