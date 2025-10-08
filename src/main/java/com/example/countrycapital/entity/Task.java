@@ -31,6 +31,15 @@ public class Task {
     @Column(updatable = false)
     private LocalDate createdDate = LocalDate.now();
     
+    // Add user ownership for SaaS multi-tenancy
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+    
+    // Add tenant isolation
+    @Column(name = "tenant_id")
+    private String tenantId;
+    
     // Constructors
     public Task() {}
     
@@ -39,6 +48,17 @@ public class Task {
         this.description = description;
         this.deliveryDate = deliveryDate;
         this.status = TaskStatus.IN_PROGRESS;
+    }
+    
+    public Task(String title, String description, LocalDate deliveryDate, User user) {
+        this.title = title;
+        this.description = description;
+        this.deliveryDate = deliveryDate;
+        this.status = TaskStatus.IN_PROGRESS;
+        this.user = user;
+        if (user != null) {
+            this.tenantId = user.getUsername();
+        }
     }
     
     // Getters and Setters
@@ -88,6 +108,25 @@ public class Task {
     
     public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
+    }
+    
+    public User getUser() {
+        return user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null) {
+            this.tenantId = user.getUsername();
+        }
+    }
+    
+    public String getTenantId() {
+        return tenantId;
+    }
+    
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
     
     // Utility methods

@@ -51,15 +51,20 @@ public class TaskController {
     
     @GetMapping("/{id}/edit")
     public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
-        Optional<Task> task = taskService.getTaskById(id);
-        if (task.isEmpty()) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Task not found!");
+        try {
+            Optional<Task> task = taskService.getTaskById(id);
+            if (task.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Task not found or access denied!");
+                return "redirect:/tasks";
+            }
+            
+            model.addAttribute("task", task.get());
+            model.addAttribute("taskStatuses", TaskStatus.values());
+            return "tasks/form";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: You can only edit your own tasks!");
             return "redirect:/tasks";
         }
-        
-        model.addAttribute("task", task.get());
-        model.addAttribute("taskStatuses", TaskStatus.values());
-        return "tasks/form";
     }
     
     @PostMapping("/{id}")
@@ -71,9 +76,13 @@ public class TaskController {
             return "tasks/form";
         }
         
-        task.setId(id);
-        taskService.updateTask(task);
-        redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully!");
+        try {
+            task.setId(id);
+            taskService.updateTask(task);
+            redirectAttributes.addFlashAttribute("successMessage", "Task updated successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: You can only update your own tasks!");
+        }
         return "redirect:/tasks";
     }
     
@@ -83,7 +92,7 @@ public class TaskController {
             taskService.deleteTask(id);
             redirectAttributes.addFlashAttribute("successMessage", "Task deleted successfully!");
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "Error deleting task!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Access denied: You can only delete your own tasks!");
         }
         return "redirect:/tasks";
     }
@@ -95,7 +104,7 @@ public class TaskController {
             taskService.updateTaskStatus(id, status);
             return ResponseEntity.ok("Status updated successfully");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error updating status");
+            return ResponseEntity.badRequest().body("Access denied: You can only update your own tasks");
         }
     }
     
@@ -112,5 +121,18 @@ public class TaskController {
     @ResponseBody
     public ResponseEntity<TaskService.TaskSummary> getTaskSummary() {
         return ResponseEntity.ok(taskService.getTaskSummary());
+    }
+    
+    @GetMapping("/search")
+    public String searchTasks(@RequestParam(required = false) String query, Model model) {
+        if (query != null && !query.trim().isEmpty()) {
+            model.addAttribute("tasks", taskService.searchTasks(query));
+            model.addAttribute("searchQuery", query);
+        } else {
+            model.addAttribute("tasks", taskService.getAllTasks());
+        }
+        model.addAttribute("summary", taskService.getTaskSummary());
+        model.addAttribute("overdueTasks", taskService.getOverdueTasks());
+        return "tasks/list";
     }
 }
