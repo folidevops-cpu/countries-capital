@@ -52,12 +52,21 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
             .authorizeHttpRequests(authz -> authz
+                // Public country-related endpoints
+                .requestMatchers("/").permitAll()
+                .requestMatchers("/countries").permitAll()
+                .requestMatchers("/capital").permitAll()
+                
+                // Authentication endpoints
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
+                
+                // Static resources and health checks
                 .requestMatchers("/actuator/health").permitAll()
                 .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .requestMatchers("/h2-console/**").permitAll()
-                .requestMatchers("/").permitAll()
+                
+                // All other requests require authentication (like /tasks/*)
                 .anyRequest().authenticated()
             )
             .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin())) // For H2 console
