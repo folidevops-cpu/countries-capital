@@ -13,7 +13,7 @@ COPY pom.xml .
 COPY src ./src
 
 # # Build the application
-RUN mvn clean package -DskipTests
+RUN mvn package
 
 # # Create a non-root user for security
 RUN groupadd -r spring && useradd -r -g spring spring
